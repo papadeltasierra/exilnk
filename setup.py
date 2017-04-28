@@ -21,7 +21,7 @@ setup(
     author='Paul D.Smith',
     author_email='paul.d.smith@metaswitch.com',
     license='proprietary',
-    packages=['Exlink'],
+    packages=['Exlink', 'Exlink.Codes'],
     url='https://github.com/papadeltasierra/exlink',
     include_package_data=True,
     classifiers=[

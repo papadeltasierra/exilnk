@@ -7,7 +7,7 @@ Samsung provides a serial port on many older 'smart TVs', i.e. the ones that are
 ## Components and Tools ##
 Exlink contains the following components and tools:
   * **exlink**, the main class that talks to the Samsung TV via the serial port; includes methods such as 'volumeUp()'
-  * **codes**, definitions a many of the available functions that can be requested from the Samsung TV; support for individual codes varies by TV model
+  * **exlinkCodes**, definitions a many of the available functions that can be requested from the Samsung TV; support for individual codes varies by TV model
   * **json_exlink**, a simple web server that accepts JSON requests and converts them to TV control requests
   * **samsung_tv**, an example application that demonstrates using exlink to control a Samsung TV.
 

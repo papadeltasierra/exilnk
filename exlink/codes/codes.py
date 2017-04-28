@@ -1,3 +1,7 @@
+"""
+These are the 4-bytes that create the Exlink code.  They are prefixed by the
+Exlink comment bytes, [0x08, 0x22] and followed by a checksum byte.
+"""
 KEY_HDMI = [0x0d, 0x00, 0x00, 0x8b]
 KEY_POWER = [0x00, 0x00, 0x00, 0x00]
 KEY_SOURCE = [0x0d, 0x00, 0x00, 0x01]
