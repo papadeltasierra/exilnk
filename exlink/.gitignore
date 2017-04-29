@@ -1,0 +1,6 @@
+.ropeproject
+*.pyc
+*.log
+__pycache__
+exlink.egg-info/
+dist/

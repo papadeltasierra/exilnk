@@ -76,7 +76,8 @@ class SamsungCLI(object):
     def _check_serialport_exists(self):
         """Check if the user provided serial port exists"""
         try:
-            st = os.stat(self._args.port)
+            if sys.platform != 'win32':
+                st = os.stat(self._args.port)
             return True
         except OSError:
             self._errors.append("Device '%s' is not accessible or does no exist" % (self._args.port,))
@@ -106,6 +107,11 @@ class SamsungCLI(object):
             except ValueError:
                 self._errors.append("argument is not a valid number between 0 and 255")
                 return False
+        elif cmd == 'blaster':
+            if len(args) <= 0 or (len(args) % 4) != 0:
+                self._errors.append("%s expects groups of 4 arguments" % (cmd,))
+                return False
+
         else:
             if len(args) != 0:
                 self._errors.append("%s does not need arguments" % (cmd,))
@@ -139,7 +145,11 @@ class SamsungCLI(object):
 
         self._tv = exlink.TVRemote(self._args.port)
         command_method = getattr(self._tv, "cmd_" + self._args.command)
-        command_method(*[int(a) for a in self._args.args])
+        if self._args.command == 'blaster':
+            # Blaster is a list of hex codes.
+            command_method(*[int(a, 16) for a in self._args.args])
+        else:
+            command_method(*[int(a) for a in self._args.args])
 
 if __name__ == '__main__':
     cli = SamsungCLI()

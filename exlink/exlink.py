@@ -1,3 +1,4 @@
+from __future__ import print_function
 import time
 import serial
 
@@ -69,7 +70,8 @@ class TVRemote(object):
         cmd = "%s%c%c%c%c" % (SAMSUNG_REQUEST_PREFIX, cmd1, cmd2, cmd3, value)
         cmd += chr(self._checksum(cmd))
 
-        self.port.write(cmd.encode('latin1'))
+        # self.port.write(cmd.encode('latin1'))
+        self.port.write(cmd)
 
         time.sleep(timeout)
 
@@ -166,6 +168,15 @@ class TVRemote(object):
         return self._send_cmd(0x00, 0x00, 0x00, 0x02)
     cmd_power_on.nargs = 0
 
+    def cmd_blaster(self, *args):
+        """Blast raw codes at the TV."""
+        for i in range(0, len(args), 4):
+            print(args[i:i+4])
+            rc = self._send_cmd(*args[i:i+4])
+            if not rc:
+                break;
+        return rc
+    cmd_blaster.nargs = 4
 
     @classmethod
     def method_list(cls):
