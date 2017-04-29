@@ -34,38 +34,6 @@ class TVRemote(object):
             chk = (chk + ord(ch)) % 256
         return (~chk + 1) % 256
 
-    def _analyze_response(self):
-        status = ST_INIT
-        while True:
-            c = self.port.read(size=1)
-
-            # timeout
-            if not c:
-                return False
-
-            if DEBUG:
-                print("%02X" % ord(c), sep=' ')
-
-            if status == ST_INIT:
-                if c == SAMSUNG_RESPONSE_SUCCESS[0]:
-                    status = ST_CC1
-                else:
-                    status = ST_INIT
-            elif status == ST_CC1:
-                if c == SAMSUNG_RESPONSE_SUCCESS[1]:
-                    status = ST_CC2
-                else:
-                    status = ST_INIT
-            elif status == ST_CC2:
-                if c == SAMSUNG_RESPONSE_SUCCESS[2]:
-                    return True
-                elif c == SAMSUNG_RESPONSE_FAILURE[2]:
-                    return False
-                else:
-                    status = ST_INIT
-            else:
-                status = ST_INIT
-
     def _send_cmd(self, cmd1=0, cmd2=0, cmd3=0, value=0, timeout=0.1):
         cmd = "%s%c%c%c%c" % (SAMSUNG_REQUEST_PREFIX, cmd1, cmd2, cmd3, value)
         cmd += chr(self._checksum(cmd))
@@ -74,8 +42,7 @@ class TVRemote(object):
         self.port.write(cmd)
 
         time.sleep(timeout)
-
-        response = self._analyze_response()
+        response = self.port.read(3)
 
         return response == SAMSUNG_RESPONSE_SUCCESS
 
@@ -173,7 +140,7 @@ class TVRemote(object):
         for i in range(0, len(args), 4):
             print(args[i:i+4])
             rc = self._send_cmd(*args[i:i+4])
-            if not rc:
+            if !rc:
                 break;
         return rc
     cmd_blaster.nargs = 4

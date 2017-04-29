@@ -79,7 +79,7 @@ class SamsungTV(object):
         if (self._args.failures > 0 and
                 random.randint(0, 100) <= self._args.failures):
             logger.info('failing the request')
-            if verbose:
+            if self._args.verbose:
                 print('Random failure: ', end='')
             return False
         else:
