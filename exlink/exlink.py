@@ -140,7 +140,7 @@ class TVRemote(object):
         for i in range(0, len(args), 4):
             print(args[i:i+4])
             rc = self._send_cmd(*args[i:i+4])
-            if !rc:
+            if not rc:
                 break;
         return rc
     cmd_blaster.nargs = 4
