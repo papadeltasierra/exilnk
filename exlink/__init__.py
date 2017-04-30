@@ -1,1 +1,1 @@
-from Exlink import Exlink
+from exlink import TVRemote

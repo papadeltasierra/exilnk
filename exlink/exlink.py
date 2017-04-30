@@ -138,7 +138,6 @@ class TVRemote(object):
     def cmd_blaster(self, *args):
         """Blast raw codes at the TV."""
         for i in range(0, len(args), 4):
-            print(args[i:i+4])
             rc = self._send_cmd(*args[i:i+4])
             if not rc:
                 break;

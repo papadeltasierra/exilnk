@@ -1,1 +1,1 @@
-from Codes import Codes
+from codes import *
